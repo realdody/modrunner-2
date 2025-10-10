@@ -1,5 +1,9 @@
 # Changelog
 
+## \[1.5.2] (2025-10-10)
+
+- Fixed notifications not being sent for some Modrinth projects
+
 ## \[1.5.1] (2025-05-09)
 
 - Fixed notifications for tracked Modrinth projects sometimes not showing or not showing at the correct time

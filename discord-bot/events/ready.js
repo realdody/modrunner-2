@@ -93,7 +93,7 @@ async function checkForProjectUpdates(client) {
     // Split into batches
     let batches = [];
     if (dbModrinthProjectIds.length > MAX_BATCH_CALL_SIZE_MR) {
-      for (let i = 0; i <= Math.ceil(dbModrinthProjectIds.length / MAX_BATCH_CALL_SIZE_MR); i++) {
+      for (let i = 0; i <= Math.ceil(dbModrinthProjectIds.length / MAX_BATCH_CALL_SIZE_MR) + 1; i++) {
         batches.push(dbModrinthProjectIds.slice(0, MAX_BATCH_CALL_SIZE_MR));
         dbModrinthProjectIds.splice(0, MAX_BATCH_CALL_SIZE_MR);
       }
