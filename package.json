@@ -1,0 +1,48 @@
+{
+  "name": "modrunner",
+  "version": "1.5.2",
+  "private": true,
+  "main": "bot.ts",
+  "scripts": {
+    "prettier-check": "prettier --check .",
+    "prettier-write": "prettier --write .",
+    "eslint": "eslint .",
+    "eslint-fix": "eslint fix .",
+    "build": "bun run register-globally && bun run alter-db",
+    "start": "bun bot.ts",
+    "dev": "bun --watch bot.ts",
+    "register": "bun scripts/register-commands.ts",
+    "register-globally": "bun scripts/register-commands.ts --global",
+    "create-db": "bun scripts/initialize-database.ts",
+    "reset-db": "bun scripts/initialize-database.ts --force",
+    "alter-db": "bun scripts/initialize-database.ts --alter",
+    "migrate": "bun scripts/migrate-database.ts",
+    "set-guild-max": "bun scripts/set-guild-max-tracking.ts"
+  },
+  "dependencies": {
+    "@discordjs/rest": "^1.7.1",
+    "@logtail/pino": "^0.5.7",
+    "dayjs": "^1.11.19",
+    "discord-api-types": "^0.38.34",
+    "discord.js": "^14.25.1",
+    "express": "^4.21.2",
+    "ms": "^2.1.3",
+    "openai": "^3.3.0",
+    "pino": "^8.21.0",
+    "pino-pretty": "^9.4.1",
+    "sequelize": "^6.37.7",
+    "sqlite3": "^5.1.7",
+    "undici": "^5.29.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.5",
+    "@types/ms": "^2.1.0",
+    "@types/node": "^24.10.1",
+    "bun-types": "^1.3.3",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^8.10.2",
+    "nodemon": "^2.0.22",
+    "prettier": "^2.8.8",
+    "typescript": "^5.9.3"
+  }
+}
