@@ -10,7 +10,7 @@ const targets: pino.TransportTargetOptions[] = [
     },
 ];
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production' && process.env.BETTERSTACK_SOURCE_TOKEN) {
     targets.push({
         target: '@logtail/pino',
         options: { sourceToken: process.env.BETTERSTACK_SOURCE_TOKEN },
