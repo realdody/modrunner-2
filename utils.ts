@@ -6,12 +6,7 @@ import { listProjectVersions } from './api/modrinth';
 import { TrackedProjects, Guilds } from './database/db';
 import { EmbedBuilder, codeBlock, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField, Client, TextChannel, ForumChannel } from 'discord.js';
 import dayjs from 'dayjs';
-import { Configuration, OpenAIApi } from 'openai';
 
-const configuration = new Configuration({
-    apiKey: process.env.OPENAI_API_KEY,
-});
-const openai = new OpenAIApi(configuration);
 
 interface DbProject {
     id: string;
@@ -276,39 +271,7 @@ export async function sendUpdateEmbed(requestedProject: RequestedProject, dbProj
                     `Sent ${guildSettings.notificationStyle} notification for project ${dbProject.name} (${dbProject.id}) in guild ${channel.guild.name} (${channel.guild.id}) in channel ${channel.name} (${channel.id}) for version ${versionData.name} (${versionData.number})`
                 );
                 break;
-            case 'ai': {
-                const response = await openai.createChatCompletion({
-                    model: 'gpt-3.5-turbo',
-                    messages: [
-                        {
-                            role: 'user',
-                            content: `Create an announcement with a professional tone for an update to ${dbProject.name} on ${dbProject.platform}. 
-								The new version is ${versionData.name}, it's a ${versionData.type} release, and the changelog is: ${trimChangelog(versionData.changelog)}. 
-								Use markdown formatting to highlight important information`,
-                        },
-                    ],
-                    max_tokens: 1024,
-                    n: 1,
-                });
-                logger.debug(response.data);
 
-                if (channel.type === ChannelType.GuildForum) {
-                    await (channel as ForumChannel).threads.create({
-                        name: `${versionData.name}`,
-                        message: {
-                            content: `${response.data.choices[0].message?.content || ''}\n${rolesString}`,
-                        },
-                    });
-                } else {
-                    await (channel as TextChannel).send({
-                        content: `${response.data.choices[0].message?.content || ''}\n${rolesString}`,
-                    });
-                }
-                logger.info(
-                    `Sent ${guildSettings.notificationStyle} notification for project ${dbProject.name} (${dbProject.id}) in guild ${channel.guild.name} (${channel.guild.id}) in channel ${channel.name} (${channel.id}) for version ${versionData.name} (${versionData.number})`
-                );
-                break;
-            }
             default:
                 if (channel.type === ChannelType.GuildForum) {
                     await (channel as ForumChannel).threads
